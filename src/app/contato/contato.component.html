@@ -21,6 +21,9 @@
                 minlength="5" maxlength="100">
             </textarea>
           </div>
+          <div *ngFor="let err of listaErros;">
+            <div class="alert alert-danger">{{err.texto}}</div>
+          </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
