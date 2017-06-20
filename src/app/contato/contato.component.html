@@ -7,6 +7,10 @@
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
         </p>
         <form [formGroup]="contatoForm" (ngSubmit)="onSubmit()">
+          <div *ngFor="let err of listaResultado">
+            <div [ngClass]="{'alert-success': err.sucesso, 'alert-danger': !err.sucesso}"
+                 class="alert">{{err.texto}}</div>
+          </div>          
           <div class="form-group">
             <input type="text" class="form-control"
                 formControlName="nome" placeholder="nome" required>

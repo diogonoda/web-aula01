@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Http, Response, RequestOptions, Headers } from '@angular/http';
+
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-contato',
@@ -11,9 +14,9 @@ export class ContatoComponent implements OnInit {
   falha = { sucesso: false, texto: "Problemas no envio do formulario de contato!" }
   contatoForm: FormGroup;
   listaErros = [];
-  listaResultados = [];
+  listaResultado = [];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private http: Http, private zone: NgZone) { }
 
   mensagensErro = { 'nome': {'required': 'Favor preencher o nome'},
                     'email': { 'required': 'Favor preencher o email',
@@ -41,7 +44,40 @@ export class ContatoComponent implements OnInit {
     this.onValueChanged();
   }
 
-  onSubmit() {}
+  onSubmit() {
+    if(this.contatoForm.valid){
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      let options = new RequestOptions({ headers: headers });
+
+      this.http.post('api/contato', JSON.stringify(this.contatoForm.value), options)
+          .map(this.mapeiaResultado)
+          .subscribe(recent => {
+              this.zone.run(() => {
+                this.resultadoEnviaContato(recent);
+              })
+           });
+    }
+  }
+
+  mapeiaResultado(res: Response){
+    return res.json();
+  }
+
+  resultadoEnviaContato(res: Resultado | any){
+    var sucesso = {
+      sucesso: true,
+      texto: "Contato enviado com sucesso!"
+    };
+    this.listaResultado = [];
+
+    if(res.success){
+      this.listaResultado.push(sucesso);
+      this.contatoForm.markAsPristine();
+      this.contatoForm.reset();
+    } else {
+      this.listaResultado.push(this.falha);
+    }
+  }
 
   onValueChanged(data?: any) {
     if(!this.contatoForm) return;
@@ -63,4 +99,8 @@ export class ContatoComponent implements OnInit {
       }
     }
   }
+}
+
+export class Resultado{
+  success: false
 }
