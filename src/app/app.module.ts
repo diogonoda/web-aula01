@@ -5,13 +5,11 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { ContatoComponent } from './contato/contato.component';
-import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContatoComponent,
-    HomeComponent
+    ContatoComponent
   ],
   imports: [
     BrowserModule,
