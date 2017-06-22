@@ -5,16 +5,24 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { ContatoComponent } from './contato/contato.component';
+import { HomeComponent } from './home/home.component';
+import { ArtigoComponent } from './artigo/artigo.component';
+import { routes } from './routes';
+
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ContatoComponent
+    ContatoComponent,
+    HomeComponent,
+    ArtigoComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
