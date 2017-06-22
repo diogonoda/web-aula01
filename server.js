@@ -35,6 +35,14 @@ app.post('api/contato', function(req, res){
     });
 });
 
+app.get('/api/artigos', function(req, req){
+    const artigosDbPath = dbFolder + '/artigos.json';
+
+    tryRead(artigosDbPath, function(artigos){
+        res.status(200).json(artigos);
+    });
+});
+
 app.get('*', function(req, res){
     res.status(404).send({ error: 'API not found' });
 });
