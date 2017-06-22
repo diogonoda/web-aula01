@@ -22,7 +22,7 @@ import { RouterModule } from '@angular/router';
     BrowserModule,
     ReactiveFormsModule,
     HttpModule,
-    RouterModule
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
